@@ -1,10 +1,21 @@
-Insert you mod description here.
+This mod gives a capture progress bar from WoT PC v0.7.4 (the patch when Encounter battles were introduced).
+- The vertical area is shrinked
+- The capture progress has some illumination
+- The capture progress value is always shown (e.g. Supremacy, Encounter when there are players from different teams on the base)
+- Only one file modified: no HUDLayer.yaml modifications needed (can be useful for mod packs)
 
 Notes:
-Insert additional notes & FAQ here.
+Q: Can you add capture timer/tank in capture number?
+A: For this the game decompilation and research on how these things work, and probably modifying the code, is needed.
+
+Q: Can you make the capture progress blinking like in original, when both teams try to capture? (the background color repeats the color of who stood in the base, the progress itself is blinking with white, not gold)
+A: Unfortunately for the blinking implementation, the game decompilation and research on how these things work, and probably modifying the code, is needed.
+
+Q: The light bulb is displayed over the capture progress bar
+A: I don't see a critical issue here.
 
 Compatibility:
-- Platform: (any|pc|android)
-- Game publisher: (any|wg|lg)
-- Game version: (any|[N.N-]N.N[+])
-- Game version tested against: N.N
+- Platform: any
+- Game publisher: any
+- Game version: any
+- Game version tested against: 9.7.0

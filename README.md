@@ -1,9 +1,10 @@
-# WoT Blitz - `insert your mod name here`
+# WoT Blitz - Battle CaptureProgressBar BB Classic
 
-`insert any media here`
+![Ally capturing](public/media/ally.jpg)
+![Enemy capturing](public/media/enemy.jpg)
+![Both trying to capture](public/media/both.jpg)
 
 ## Description
-`Here go mod descriptions - the content that you can provide in various mod sites as well. Specify the links to your mod descriptions from public/desc directory here`
 * [en](public/desc/en.txt)
 * [ru](public/desc/ru.txt)
 
