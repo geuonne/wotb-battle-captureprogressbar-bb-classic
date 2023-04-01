@@ -1,0 +1,8 @@
+animation _INIT
+{
+	repeat
+	{
+		ChangeProperty("**/LockedGlow", "UIOpacityComponent", "opacity", 1.000000, 0.25, EASE_OUT);
+		ChangeProperty("**/LockedGlow", "UIOpacityComponent", "opacity", 0.000000, 0.5, EASE_IN);
+	}
+}

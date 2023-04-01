@@ -6,50 +6,41 @@ ImportedPackages:
 StyleSheets:
 -   selector: ".allies #Outline #Container"
     properties:
-        bg-color: [0.090000, 0.350000, 0.050000, 0.600000]
--   selector: ".allies #Outline #Container #Bar"
+        bg-color: [0.090000, 0.380000, 0.050000, 0.600000]
+-   selector: ".allies #Outline #Container #Bar #LockedCont"
     properties:
-        bg-color: [0.250000, 0.950000, 0.200000, 0.000000]
--   selector: ".allies #Outline #Container #Bar *"
+        bg-color: [0.180000, 0.750000, 0.120000, 1.000000]
+-   selector: ".allies #Outline #Container #Bar #LockedCont #LockedGlow"
     properties:
-        bg-color: [0.250000, 0.950000, 0.200000, 0.350000]
-
+        visible: false
 -   selector: ".enemies #Outline #Container"
     properties:
-        bg-color: [0.350000, 0.090000, 0.050000, 0.600000]
--   selector: ".enemies #Outline #Container #Bar"
-    properties:
-        bg-color: [0.950000, 0.250000, 0.200000, 0.000000]
+        bg-color: [0.380000, 0.090000, 0.050000, 0.600000]
 -   selector: ".enemies #Outline #Container #Bar *"
     properties:
-        bg-color: [0.950000, 0.250000, 0.200000, 0.450000]
+        bg-color: [0.900000, 0.190000, 0.120000, 1.000000]
+-   selector: ".enemies #Outline #Container #Bar #LockedCont #LockedGlow"
+    properties:
+        visible: false
 
--   selector: ".locked.* #Outline #Container #Bar *"
+-   selector: ".locked.* #Outline #Container #Bar #LockedCont *"
     properties:
-        bg-color: [0.950000, 0.750000, 0.000000, 0.350000]
--   selector: ".locked.* #Outline #Container"
-    properties:
-        bg-color: [0.350000, 0.200000, 0.000000, 0.600000]
+        visible: true
 
 -   selector: ".allies.observer #Outline #Container"
     properties:
         bg-color: [0.350000, 0.090000, 0.050000, 0.600000]
--   selector: ".allies.observer #Outline #Container #Bar"
-    properties:
-        bg-color: [0.950000, 0.250000, 0.200000, 0.000000]
 -   selector: ".allies.observer #Outline #Container #Bar *"
     properties:
-        bg-color: [0.950000, 0.250000, 0.200000, 0.450000]
+        bg-color: [0.900000, 0.190000, 0.120000, 1.000000]
 
 -   selector: ".enemies.observer #Outline #Container"
     properties:
         bg-color: [0.050000, 0.110000, 0.350000, 0.600000]
--   selector: ".enemies.observer #Outline #Container #Bar"
-    properties:
-        bg-color: [0.100000, 0.450000, 0.950000, 0.000000]
 -   selector: ".enemies.observer #Outline #Container #Bar *"
     properties:
-        bg-color: [0.100000, 0.450000, 0.950000, 0.450000]
+        bg-color: [0.070000, 0.290000, 0.750000, 1.000000]
+
 Controls:
 -   class: "UIControl"
     name: "CaptureProgressBar"
@@ -69,23 +60,31 @@ Controls:
             horizontalValue: 400.000000
         UIDataLocalVarsComponent:
             data:
+            - ["int", "barBorderThickness", "2"]
             - ["float", "glowDimension", "6.0"]
             - ["float", "glowAnchor", "(glowDimension - 3.0) * -1"]
             - ["float", "shadowDimension", "7.0"]
             - ["float", "shadowAnchor", "(shadowDimension - 3.0) * -1"]
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens/Battle/CaptureProgressBar.animation"
     children:
     -   class: "UIStaticText"
         name: "Label"
         classes: "text2-small text-color-black"
         textalign: ["HCENTER", "BOTTOM"]
         text: "BASE_CAPTURE"
-        shadowoffset: [1.0, 1.0]
-        shadowcolor: [1.0, 1.0, 1.0, 0.3]
         components:
             SizePolicy:
                 horizontalPolicy: "PercentOfParent"
                 verticalPolicy: "FixedSize"
                 verticalValue: 24.000000
+                
+            UIShadowComponent:
+                blurType: "Gauss"
+                indent: 10
+                # FIXME: Can't set this property by bindings and LocalVars smh
+                color: [0.9, 0.9, 0.9, 1.0]
+                textureScale: 1
     -   class: "UIControl"
         name: "Outline"
         size: [400.000000, 6.000000]
@@ -93,136 +92,34 @@ Controls:
         components:
             BorderComponent:
                 border-color: [0.000000, 0.000000, 0.000000, 0.750000]
-                border-thickness: 2U
             SizePolicy:
                 horizontalPolicy: "PercentOfParent"
                 verticalPolicy: "FixedSize"
                 verticalValue: 6.000000
-            Background:
-                drawType: "DRAW_FILL"
-                color: [0.000000, 0.000000, 0.000000, 0.000000]
+            UIShadowComponent:
+                blurType: "Gauss"
+                color: [0.000000, 0.000000, 0.000000, 0.400000]
+                indent: 6
+                textureScale: 1
+        bindings:
+        - ["BorderComponent.border-thickness", "barBorderThickness"]
         children:
-        -   class: "UIControl"
-            name: "ShadowN"
-            classes: "barshadow"
-            components:
-                Anchor:
-                    leftAnchorEnabled: true
-                    rightAnchorEnabled: true
-                    vCenterAnchorEnabled: true
-                    topAnchorEnabled: true
-                Background:
-                    drawType: "DRAW_SCALE_TO_RECT"
-                    sprite: "~res:/Gfx/Lobby/backgrounds/bg_gradient_vertical_0-100"
-                    color: [0.000000, 0.000000, 0.000000, 0.150000]
-            bindings:
-            - ["Anchor.topAnchor", "shadowAnchor"]
-        -   class: "UIControl"
-            name: "ShadowS"
-            classes: "barshadow"
-            components:
-                Anchor:
-                    leftAnchorEnabled: true
-                    rightAnchorEnabled: true
-                    vCenterAnchorEnabled: true
-                    bottomAnchorEnabled: true
-                Background:
-                    drawType: "DRAW_SCALE_TO_RECT"
-                    sprite: "~res:/Gfx/Lobby/backgrounds/bg_gradient_vertical_0-100"
-                    spriteModification: ["FLIP_VERTICAL"]
-                    color: [0.000000, 0.000000, 0.000000, 0.150000]
-            bindings:
-            - ["Anchor.bottomAnchor", "shadowAnchor"]
-        -   class: "UIControl"
-            name: "ShadowNW"
-            classes: "barshadow"
-            components:
-                SizePolicy:
-                    horizontalPolicy: "FixedSize"
-                Anchor:
-                    leftAnchorEnabled: true
-                    vCenterAnchorEnabled: true
-                    topAnchorEnabled: true
-                Background:
-                    drawType: "DRAW_SCALE_TO_RECT"
-                    sprite: "~res:/Gfx/Lobby/backgrounds/bg_radial-gradient_quarter"
-                    spriteModification: ["FLIP_HORIZONTAL", "FLIP_VERTICAL"]
-                    color: [0.000000, 0.000000, 0.000000, 0.150000]
-            bindings:
-            - ["Anchor.topAnchor", "shadowAnchor"]
-            - ["Anchor.leftAnchor", "-shadowDimension"]
-            - ["SizePolicy.horizontalValue", "shadowDimension"]
-        -   class: "UIControl"
-            name: "ShadowNE"
-            classes: "barshadow"
-            components:
-                SizePolicy:
-                    horizontalPolicy: "FixedSize"
-                Anchor:
-                    rightAnchorEnabled: true
-                    vCenterAnchorEnabled: true
-                    topAnchorEnabled: true
-                Background:
-                    drawType: "DRAW_SCALE_TO_RECT"
-                    sprite: "~res:/Gfx/Lobby/backgrounds/bg_radial-gradient_quarter"
-                    spriteModification: ["FLIP_VERTICAL"]
-                    color: [0.000000, 0.000000, 0.000000, 0.150000]
-            bindings:
-            - ["Anchor.topAnchor", "shadowAnchor"]
-            - ["Anchor.rightAnchor", "-shadowDimension"]
-            - ["SizePolicy.horizontalValue", "shadowDimension"]
-        -   class: "UIControl"
-            name: "ShadowSW"
-            classes: "barshadow"
-            components:
-                SizePolicy:
-                    horizontalPolicy: "FixedSize"
-                Anchor:
-                    leftAnchorEnabled: true
-                    vCenterAnchorEnabled: true
-                    bottomAnchorEnabled: true
-                Background:
-                    drawType: "DRAW_SCALE_TO_RECT"
-                    sprite: "~res:/Gfx/Lobby/backgrounds/bg_radial-gradient_quarter"
-                    spriteModification: ["FLIP_HORIZONTAL"]
-                    color: [0.000000, 0.000000, 0.000000, 0.150000]
-            bindings:
-            - ["Anchor.bottomAnchor", "shadowAnchor"]
-            - ["Anchor.leftAnchor", "-shadowDimension"]
-            - ["SizePolicy.horizontalValue", "shadowDimension"]
-        -   class: "UIControl"
-            name: "ShadowSE"
-            classes: "barshadow"
-            components:
-                SizePolicy:
-                    horizontalPolicy: "FixedSize"
-                Anchor:
-                    rightAnchorEnabled: true
-                    vCenterAnchorEnabled: true
-                    bottomAnchorEnabled: true
-                Background:
-                    drawType: "DRAW_SCALE_TO_RECT"
-                    sprite: "~res:/Gfx/Lobby/backgrounds/bg_radial-gradient_quarter"
-                    color: [0.000000, 0.000000, 0.000000, 0.150000]
-            bindings:
-            - ["Anchor.bottomAnchor", "shadowAnchor"]
-            - ["Anchor.rightAnchor", "-shadowDimension"]
-            - ["SizePolicy.horizontalValue", "shadowDimension"]
         -   class: "UIControl"
             name: "Container"
             noInput: true
             components:
                 Anchor:
                     leftAnchorEnabled: true
-                    leftAnchor: 2.000000
                     rightAnchorEnabled: true
-                    rightAnchor: 2.000000
                     topAnchorEnabled: true
-                    topAnchor: 2.000000
                     bottomAnchorEnabled: true
-                    bottomAnchor: 2.000000
                 Background:
                     drawType: "DRAW_FILL"
+            bindings:
+            - ["Anchor.leftAnchor", "barBorderThickness"]
+            - ["Anchor.rightAnchor", "barBorderThickness"]
+            - ["Anchor.topAnchor", "barBorderThickness"]
+            - ["Anchor.bottomAnchor", "barBorderThickness"]
             children:
             -   class: "UIControl"
                 name: "Bar"
@@ -235,108 +132,47 @@ Controls:
                         drawType: "DRAW_FILL"
                 children:
                 -   class: "UIControl"
-                    name: "GlowN"
+                    name: "LockedCont"
+#                    visible: false
                     components:
-                        Anchor:
-                            leftAnchorEnabled: true
-                            rightAnchorEnabled: true
-                            vCenterAnchorEnabled: true
-                            topAnchorEnabled: true
+                        UIOpacityComponent: {}
                         Background:
-                            drawType: "DRAW_SCALE_TO_RECT"
-                            sprite: "~res:/Gfx/Lobby/backgrounds/bg_gradient_vertical_0-100"
-                    bindings:
-                    - ["Anchor.topAnchor", "glowAnchor"]
-                -   class: "UIControl"
-                    name: "GlowS"
-                    components:
-                        Anchor:
-                            leftAnchorEnabled: true
-                            rightAnchorEnabled: true
-                            vCenterAnchorEnabled: true
-                            bottomAnchorEnabled: true
-                        Background:
-                            drawType: "DRAW_SCALE_TO_RECT"
-                            sprite: "~res:/Gfx/Lobby/backgrounds/bg_gradient_vertical_0-100"
-                            spriteModification: ["FLIP_VERTICAL"]
-                    bindings:
-                    - ["Anchor.bottomAnchor", "glowAnchor"]
-                -   class: "UIControl"
-                    name: "GlowNW"
-                    components:
+                            drawType: "DRAW_FILL"
+                            colorInheritType: "COLOR_IGNORE_PARENT"
+#                            color: [1.0, 1.0, 1.0, 1.0]
                         SizePolicy:
-                            horizontalPolicy: "FixedSize"
-                        Anchor:
-                            leftAnchorEnabled: true
-                            vCenterAnchorEnabled: true
-                            topAnchorEnabled: true
-                        Background:
-                            drawType: "DRAW_SCALE_TO_RECT"
-                            sprite: "~res:/Gfx/Lobby/backgrounds/bg_radial-gradient_quarter"
-                            spriteModification: ["FLIP_HORIZONTAL", "FLIP_VERTICAL"]
-                    bindings:
-                    - ["Anchor.topAnchor", "glowAnchor"]
-                    - ["Anchor.leftAnchor", "-glowDimension"]
-                    - ["SizePolicy.horizontalValue", "glowDimension"]
-                -   class: "UIControl"
-                    name: "GlowNE"
-                    components:
-                        SizePolicy:
-                            horizontalPolicy: "FixedSize"
-                        Anchor:
-                            rightAnchorEnabled: true
-                            vCenterAnchorEnabled: true
-                            topAnchorEnabled: true
-                        Background:
-                            drawType: "DRAW_SCALE_TO_RECT"
-                            sprite: "~res:/Gfx/Lobby/backgrounds/bg_radial-gradient_quarter"
-                            spriteModification: ["FLIP_VERTICAL"]
-                    bindings:
-                    - ["Anchor.topAnchor", "glowAnchor"]
-                    - ["Anchor.rightAnchor", "-glowDimension"]
-                    - ["SizePolicy.horizontalValue", "glowDimension"]
-                -   class: "UIControl"
-                    name: "GlowSW"
-                    components:
-                        SizePolicy:
-                            horizontalPolicy: "FixedSize"
-                        Anchor:
-                            leftAnchorEnabled: true
-                            vCenterAnchorEnabled: true
-                            bottomAnchorEnabled: true
-                        Background:
-                            drawType: "DRAW_SCALE_TO_RECT"
-                            sprite: "~res:/Gfx/Lobby/backgrounds/bg_radial-gradient_quarter"
-                            spriteModification: ["FLIP_HORIZONTAL"]
-                    bindings:
-                    - ["Anchor.bottomAnchor", "glowAnchor"]
-                    - ["Anchor.leftAnchor", "-glowDimension"]
-                    - ["SizePolicy.horizontalValue", "glowDimension"]
-                -   class: "UIControl"
-                    name: "GlowSE"
-                    components:
-                        SizePolicy:
-                            horizontalPolicy: "FixedSize"
-                        Anchor:
-                            rightAnchorEnabled: true
-                            vCenterAnchorEnabled: true
-                            bottomAnchorEnabled: true
-                        Background:
-                            drawType: "DRAW_SCALE_TO_RECT"
-                            sprite: "~res:/Gfx/Lobby/backgrounds/bg_radial-gradient_quarter"
-                    bindings:
-                    - ["Anchor.bottomAnchor", "glowAnchor"]
-                    - ["Anchor.rightAnchor", "-glowDimension"]
-                    - ["SizePolicy.horizontalValue", "glowDimension"]
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfParent"
+                    children:
+                    -   class: "UIControl"
+                        name: "LockedGlow"
+                        input: false
+                        components:
+                            UIOpacityComponent: {}
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfParent"
+                            Background:
+                                drawType: "DRAW_FILL"
+                                colorInheritType: "COLOR_IGNORE_PARENT"
+                                color: [1.0, 1.0, 1.0, 1.0]
+                            UIShadowComponent:
+                                blurType: "Gauss"
+                                indent: 12
+                                color: [1.0, 1.0, 1.0, 1.0]
+                                textureScale: 1
     -   class: "UIStaticText"
         name: "PercentValue"
         classes: "text2-small text-color-black"
         textalign: ["HCENTER", "TOP"]
         text: "100"
-        shadowoffset: [1.0, 1.0]
-        shadowcolor: [1.0, 1.0, 1.0, 0.3]
         components:
             SizePolicy:
                 horizontalPolicy: "PercentOfParent"
                 verticalPolicy: "FixedSize"
                 verticalValue: 24.000000
+            UIShadowComponent:
+                blurType: "Gauss"
+                indent: 10
+                color: [0.9, 0.9, 0.9, 1.0]
+                textureScale: 1
