@@ -78,13 +78,13 @@ Controls:
                 horizontalPolicy: "PercentOfParent"
                 verticalPolicy: "FixedSize"
                 verticalValue: 24.000000
-                
+            UITextComponent:
+                shadowColor: [1.0, 1.0, 1.0, 0.3]
+                shadowOffset: [1.0, 1.0]
             UIShadowComponent:
                 blurType: "Gauss"
-                indent: 10
                 # FIXME: Can't set this property by bindings and LocalVars smh
-                color: [0.9, 0.9, 0.9, 1.0]
-                textureScale: 1
+                color: [1.0, 1.0, 1.0, 1.0]
     -   class: "UIControl"
         name: "Outline"
         size: [400.000000, 6.000000]
@@ -171,8 +171,9 @@ Controls:
                 horizontalPolicy: "PercentOfParent"
                 verticalPolicy: "FixedSize"
                 verticalValue: 24.000000
+            UITextComponent:
+                shadowColor: [1.0, 1.0, 1.0, 0.3]
+                shadowOffset: [1.0, 1.0]
             UIShadowComponent:
                 blurType: "Gauss"
-                indent: 10
-                color: [0.9, 0.9, 0.9, 1.0]
-                textureScale: 1
+                color: [1.0, 1.0, 1.0, 1.0]
